@@ -1,0 +1,164 @@
+##############################################################################
+NOTES PRICING CHALLENGE 
+##############################################################################
+#### DATA ####
+1. A priori good looking vars:
+  - main name:
+    (get sentiment of description)
+    (get importnat variables for the description as: gardens, roof, vigilancy,
+  - location (transform to a more specific colony)
+  - timestamp
+  - description 
+    (get sentiment of description)
+    (get importnat variables for the description as: gardens, roof, vigilancy, parking lot, etc)
+  - vendor
+  - lat & long:
+    (spatial join with agebs)
+  - price_mod/final_price/price_square_meter
+  - since period:
+    (transform all date to one single time unit (day, months, etc))
+  - since value
+  - days on site
+  - amenities
+  - bathrooms
+  - cellars
+  - num floors
+  - monthly fee
+  - apartments per floor
+  - disposition
+  - floor situated
+  - orientation
+  - num bedrooms
+  - department type
+  - m2
+
+2. look for distribution
+  - price_square_meters:
+    - density
+    - missing values
+    - outliers
+
+
+#### nlp ####
+how to stemmize in spanish in R: https://www.red-gate.com/simple-talk/databases/sql-server/bi-sql-server/text-mining-and-sentiment-analysis-with-r/
+
+# nota: es un tema descargar el paquete "tm", necesitas descargar software para xcode
+
+#### ageb joins in R ####
+1. transform lat-long to lcc (mexico)
+2. important mexican databases:
+  - mexican margination (conapo)
+  - joins espaciales: https://bookdown.org/martinmontaneb/CienciaDeDatosParaCuriosos/datos-espaciales-en-r.html
+  - tocar puntos a poligonos: join vs within vs touches/en vs dentro vs sobre
+  - within distance
+  - 
+
+#### agebs ####
+1. CONEVAL
+  - the info is a mix between inegi and their methodology. The interesant variables could be:
+    - social lag
+2. Mexican Censo 2020:
+  - the description of the variables are at https://www.inegi.org.mx/contenidos/programas/ccpv/2020/doc/fd_agebmza_urbana_cpv2020.pdf
+  - the possible interesant variables to considere are
+  - POBTOT: total population
+  - P_18A24: popu between 18 and 24 y. old
+  - PROM_HNV: number of babies per woman
+  - PNACENT: popu that was born there
+  - PNACOE: popu that wasn't born there
+  - PRES2015: popu that lived there 5 years ago (proxy of sedentaries)
+  - PRESOE15: popu that lived there 5 years ago (proxy of nomads)
+  - P18A24A: popu between 18 and 24 that goes to school
+  - GRAPROES: mean of the number of years that the population went to school
+  - PEA: active economic popu
+  - POCUPADA: busey economic popu (can do a ratio between last 2)
+  - PAFIL_IPRIV: people with private health
+  - P12YM_SOLT: single people
+  - P12YM_CASA: married people
+  - TOTHOG: number of houses in census
+  - POBHOG: population in census
+  - VIVTOT: number of houses 
+  - TVIVHAB: number of houses inhabited (can do ratio)
+  - TVIVPAR: number of particular houses
+  - VIVPAR_HAB: number of parti houses inhabited
+  - PROM_OCUP: mean of people in inhabited houses
+  - VPH_SINTIC: number of houses that doesnt have access to communication-info techs
+  - VPH_AUTOM: houses with cars
+  
+# spatial analysis
+
+- There were only 3 states considered: 02, 09, 19, that are
+baja california, cdmx and nuevo leon
+
+- there were 7 municiaplities considered
+
+- there were 49 distinct agebs
+
+- looking at the data, it doesnt look soo clear the distinction of price between agebs
+
+# out variables
+- num_floors is out cause 91.4% of the data is empty 
+- ap per florr has 98.4% of na's
+- disposition has 97.9%
+- floor_situated
+- department_type
+- 
+
+
+#### models ####
+# notes
+there is an outlier in id=546, then i get rid of it
+
+# y: transf
+- no se modifica por boxcox con metodo de loglike
+
+#- random forrest
+1. m2 gives a powerful interpretation of the value (yup)
+2. since_days_value isnt linear (can be spurius)
+3. emotion_descr looks something interesting their prediction values
+4. has rooftop yup
+5. amenities yup
+aux. baths, cellars, parking lots, num_bedrooms, roof, is_new, 
+6. locality for cdmx in condesa-roma is really good (create new feature!)
+  (Alvaro Obregón / Alvaro Obregón / cuauhtemoc / miguel hidalgo) vs others
+7. pea looks interesting
+8. tvivtot also looks promosing 
+9. vivpar_hab_ratio
+10. pobtot
+11. p18a24a_ratio
+
+# rf2: ok
+- maybe take out: cellars & 
+- p18a24 or p_18a24
+- corr between baths & rooms
+- the ratio was tried but wasnt significative
+
+
+# trees
+more or less
+
+# linear models
+noup
+
+# better to explain with rf
+
+# consideraciones
+the sample was taken from luxury departments. Therefore the model are baised
+to this and that's one of the causes that the models params are counterintuitive
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

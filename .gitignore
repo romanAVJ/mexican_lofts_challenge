@@ -1,0 +1,18 @@
+# literal file namespace
+.DS_Store
+.Rhistory
+
+# src folders
+src/.DS_Store
+src/explore_shp.R
+src/sandbox_shp.R
+
+# docs folder
+docs/.DS_Store
+docs/~$ppt_challenge.pptx
+docs/ppt_challenge.pdf
+docs/ppt_challenge.pptx
+
+# all data
+data/coneval/*
+Data/inegi/*

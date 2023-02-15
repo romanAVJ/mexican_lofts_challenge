@@ -1,0 +1,5 @@
+preventa: numeric(0)
+terraza: c(apa = 0.36, balcon = 0.31)
+tec: c(zona = 0.71, mst = 0.54, mty = 0.44, tres = 0.44, area = 0.38, distrito = 0.38, monterrey = 0.37, tecnologico = 0.31)
+nuevo: c(inspirado = 0.34, sensacional = 0.34)
+roma: c(norte = 0.26)
